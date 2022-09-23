@@ -1,0 +1,44 @@
+app-id: org.scanmem.gameconqueror
+runtime: org.freedesktop.Platform
+runtime-version: '21.08'
+sdk: org.freedesktop.Sdk
+command: gameconqueror
+modules:
+  - name: intltool
+    sources:
+      - url: https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz
+        sha256: 67c74d94196b153b774ab9f89b2fa6c6ba79352407037c8c14d5aeb334e959cd
+        type: archive
+    cleanup:
+      - "*"
+  - name: pam
+    buildsystem: autotools
+    cleanup-commands:
+      - mkdir /app/includes/security
+      - mv /app/include/pam_appl.h /app/includes/security/pam_appl.h
+    sources:
+      - url: https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/pam/1.4.0-11ubuntu2/pam_1.4.0.orig.tar.xz
+        sha256: cd6d928c51e64139be3bdb38692c68183a509b83d4f2c221024ccd4bcddfd034
+        type: archive
+  - name: duktape
+    buildsystem: simple
+    build-commands:
+      - INSTALL_PREFIX=/app make -f Makefile.sharedlibrary
+      - INSTALL_PREFIX=/app make -f Makefile.sharedlibrary install
+    sources:
+      - url: https://duktape.org/duktape-2.7.0.tar.xz
+        md5: b3200b02ab80125b694bae887d7c1ca6
+        type: archive
+  - name: policykit
+    buildsystem: meson
+    sources:
+      - url: https://gitlab.freedesktop.org/polkit/polkit.git
+        type: git
+  - name: gameconqueror
+    buildsystem: autotools
+    build-commands:
+      - ./autogen.sh
+      - ./configure --prefix=/app --enable-gui
+    sources:
+      - type: dir
+        path: /app/scanmem

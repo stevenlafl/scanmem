@@ -4,6 +4,6 @@ _Comment=A game hacking tool. A GUI front-end for scanmem.
 Exec=gameconqueror
 Terminal=false
 Type=Application
-Icon=GameConqueror
+Icon=org.scanmem.gameconqueror
 Categories=Development;Utility;
 StartupNotify=true
