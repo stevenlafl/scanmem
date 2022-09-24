@@ -13,9 +13,9 @@ modules:
       - "*"
   - name: pam
     buildsystem: autotools
-    cleanup-commands:
-      - mkdir /app/includes/security
-      - mv /app/include/pam_appl.h /app/includes/security/pam_appl.h
+    build-commands:
+      - mkdir -p /app/include/security
+      - cp -Rf ./libpam/include/security/* /app/include/security/
     sources:
       - url: https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/pam/1.4.0-11ubuntu2/pam_1.4.0.orig.tar.xz
         sha256: cd6d928c51e64139be3bdb38692c68183a509b83d4f2c221024ccd4bcddfd034
